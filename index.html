@@ -1,0 +1,162 @@
+<!doctype HTML>
+<html>
+<head>
+<title>Test Driven Programming</title>
+<meta charset="UTF-8"/>
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<!--<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>-->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/styles/default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/highlight.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet" type="text/css">
+<style>
+html {
+    -webkit-text-size-adjust: 100%;
+}
+
+
+code {
+white-space: pre-wrap;
+word-wrap: break-word;
+    display: block;
+    text-align: left;
+}
+
+body {
+    font-family: 'Ubuntu Mono';
+    color: #333;
+}
+h1 {
+    font-size: 5vw;
+    text-align: center;
+}
+#slides {
+    text-align: center;
+    margin: auto;
+    max-width: 900px;
+}
+#slides img {
+    margin: auto;
+}
+#slides table {
+    border-collapse: collapse;
+    border:#ccc 1px solid;
+    margin: auto;
+}
+</style>
+</head>
+<body>
+<h1>Test Driven Programming</h1>
+<div id="slides">
+<div class="slide">
+  <p>Books:</p>
+  <img class="slide" src="the_software_craftsman.jpeg"/>
+  <img class="slide" src="tdd_by_example.jpeg"/>
+    <img class="slide" src="working_effectively.jpeg"/>
+    </div>
+    <div class="slide">
+<pre>
+private static int add(final String numbers, final String delimiter) {
+    int returnValue = 0;
+    String[] numbersArray = numbers.split(delimiter);
+    List negativeNumbers = new ArrayList();
+    for (String number : numbersArray) {
+        if (!number.trim().isEmpty()) {
+            int numberInt = Integer.parseInt(number.trim());
+            if (numberInt < 0) {
+                negativeNumbers.add(numberInt);
+            } else if (numberInt <= 1000) {
+                returnValue += numberInt;
+            }
+        }
+    }
+    if (negativeNumbers.size() > 0) {
+        throw new RuntimeException("Negatives not allowed: " + negativeNumbers.toString());
+    }
+}
+</pre>
+</div>
+</div>
+</body>
+<script>
+var preTags = document.getElementsByTagName("pre");
+
+function count_indent(string) {
+    for(var i = 0; i < string.length; i++) {
+        if(string[i] != " ") {
+            return i ;
+        }
+    }
+    return string.length;
+}
+
+function blockify(preTag) {
+    var parent = preTag.parentNode;
+    var lines = preTag.innerHTML.split('\n');
+    lines.forEach(function(line) {
+        var indent = count_indent(line);
+        var div = document.createElement("code");
+        if(indent > 0) {
+            div.style['padding-left'] = (indent) + "ch";
+            console.log(indent)
+            div.style['text-indent'] = (- indent)   + "ch";
+        }
+        var trimmed = line.trim();
+        if(trimmed == "") {
+            trimmed = "&nbsp;";
+        }
+        var indentation = '<span>' + '&nbsp'.repeat(indent) + '</span>';
+        div.innerHTML = indentation + trimmed;
+        parent.appendChild(div);
+    });
+    parent.removeChild(preTag);
+    hljs.highlightBlock(parent);
+}
+
+blockify(preTags[0]);
+</script>
+<script>
+var slide = 0;
+function showSlide(s) {
+    var slides = document.getElementsByClassName("slide")
+    for(var i = 0; i < slides.length; i++) {
+        if(i == slide || slides[slide].parentNode == slides[i] || (slides[slide].parentNode == slides[i].parentNode && i < slide)) {
+            slides[i].style.display = ""
+        } else {
+            slides[i].style.display = "none"
+        }
+    }
+}
+
+function showAll() {
+    var slides = document.getElementsByClassName("slide")
+    for(var i = 0; i < slides.length; i++) {
+        slides[i].style.display = ""
+    }
+}
+
+document.onkeydown = function(e) {
+    e = e || window.event;
+    if (e.keyCode == '65') {
+        showAll();
+        return;
+    } else if (e.keyCode == '37') {
+        slide -= 1;
+    } else if (e.keyCode == '39') {
+        slide += 1;
+    } else {
+        return;
+    }
+
+    numSlides = document.getElementsByClassName("slide").length
+    if(slide < 0) {
+        slide = 0
+    } else if(slide >= numSlides) {
+        slide = numSlides-1;
+    }
+    showSlide(slide)
+}
+
+showSlide(slide);
+</script>
+</html>
