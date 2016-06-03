@@ -7,6 +7,7 @@
 <!--<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>-->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/styles/default.min.css">
+<link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-1.23.1.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/highlight.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet" type="text/css">
 <style>
@@ -76,7 +77,11 @@ private static int add(final String numbers, final String delimiter) {
 }
 </pre>
 </div>
+<div class="slide">
+<div id="qunit"></div>
+<div id="qunit-fixture"></div>
 </div>
+</div><!-- slides -->
 </body>
 <script>
 var preTags = document.getElementsByTagName("pre");
@@ -119,8 +124,9 @@ blockify(preTags[0]);
 var slide = 0;
 function showSlide(s) {
     var slides = document.getElementsByClassName("slide")
+    var top = document.getElementById("slides");
     for(var i = 0; i < slides.length; i++) {
-        if(i == slide || slides[slide].parentNode == slides[i] || (slides[slide].parentNode == slides[i].parentNode && i < slide)) {
+        if(i == slide || slides[slide].parentNode == slides[i] || (slides[slide].parentNode == slides[i].parentNode && i < slide && slides[i].parentNode != top)) {
             slides[i].style.display = ""
         } else {
             slides[i].style.display = "none"
@@ -158,5 +164,11 @@ document.onkeydown = function(e) {
 }
 
 showSlide(slide);
+</script>
+<script src="https://code.jquery.com/qunit/qunit-1.23.1.js"></script>
+<script>
+QUnit.test( "Enough slides", function( assert ) {
+    assert.ok( 5 == document.getElementsByClassName("slide").length, "Number of slides > 5" );
+});
 </script>
 </html>
