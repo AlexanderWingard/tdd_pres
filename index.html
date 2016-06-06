@@ -10,25 +10,26 @@
 <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-1.23.1.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/highlight.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet" type="text/css">
+<link href='https://fonts.googleapis.com/css?family=Lato:400,100' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
 <style>
 html {
     -webkit-text-size-adjust: 100%;
 }
-
-
 code {
-white-space: pre-wrap;
-word-wrap: break-word;
+    white-space: pre-wrap;
+    word-wrap: break-word;
     display: block;
     text-align: left;
 }
 
 body {
-    font-family: 'Ubuntu Mono';
+font-family: 'Source Sans Pro';
+font-weight: 100 !important;
     color: #333;
 }
 h1 {
-    font-size: 5vw;
+font-size: 5vw;
     text-align: center;
 }
 #slides {
@@ -44,44 +45,55 @@ h1 {
     border:#ccc 1px solid;
     margin: auto;
 }
+blockquote {
+font-style: italic;
+    text-align: left;
+}
+blockquote footer {
+    text-align: right;
+}
 </style>
 </head>
 <body>
-<h1>Test Driven Programming</h1>
-<div id="slides">
-<div class="slide">
-  <p>Books:</p>
-  <img class="slide" src="the_software_craftsman.jpeg"/>
-  <img class="slide" src="tdd_by_example.jpeg"/>
-    <img class="slide" src="working_effectively.jpeg"/>
+  <h1>Test Driven Programming</h1>
+  <div id="slides">
+    <div class="slide">
+      <p>Books:</p>
+      <img class="slide" src="the_software_craftsman.jpeg"/>
+      <p>This book mentions TDD in every chapter so I got curious.</p>
+      <img class="slide" src="tdd_by_example.jpeg"/>
+      <img class="slide" src="working_effectively.jpeg"/>
     </div>
     <div class="slide">
-<pre>
-private static int add(final String numbers, final String delimiter) {
-    int returnValue = 0;
-    String[] numbersArray = numbers.split(delimiter);
-    List negativeNumbers = new ArrayList();
-    for (String number : numbersArray) {
-        if (!number.trim().isEmpty()) {
-            int numberInt = Integer.parseInt(number.trim());
-            if (numberInt < 0) {
-                negativeNumbers.add(numberInt);
-            } else if (numberInt <= 1000) {
-                returnValue += numberInt;
-            }
-        }
-    }
-    if (negativeNumbers.size() > 0) {
-        throw new RuntimeException("Negatives not allowed: " + negativeNumbers.toString());
-    }
-}
-</pre>
-</div>
-<div class="slide">
-<div id="qunit"></div>
-<div id="qunit-fixture"></div>
-</div>
-</div><!-- slides -->
+    </div>
+    <div class="slide">
+      <div id="qunit"></div>
+      <div id="qunit-fixture"></div>
+    </div>
+    <div class="slide">
+      <h2>Red, Green, Refactor</h2>
+      <img src="tomato.jpeg" style="width:100%; max-width:661px; max-height:496px;"/>
+      <img src="cucumber.jpeg" style="width:100%; max-width:661px; max-height:496px;"/>
+      <img src="cucumber_sliced.jpeg" style="width:100%; max-width:661px; max-height:496px;"/>
+      <h2>TDD is not about testing</h2>
+      <blockquote>
+        <ul>
+          <li>Write a failing automated test before you write any code.</li>
+          <li>Remove duplication.</li>
+          <footer>Test Driven Development by Example</footer>
+        </ul>
+      </blockquote>
+      <h2></h2>
+      <blockquote>
+        <p>So, in TDD we do not write tests. We write specifications. Executable specifications.</p>
+        <footer>sustainabletdd.com</footer>
+      </blockquote>
+      <blockquote>
+        <p>Test-first fundamentalism is like abstinence-only sex ed: An unrealistic, ineffective morality campaign for self-loathing and shaming.</p>
+        <footer>TDD is dead. Long live testing by David Heinemeier Hansson</footer>
+      </blockquote>
+    </div>
+  </div><!-- slides -->
 </body>
 <script>
 var preTags = document.getElementsByTagName("pre");
@@ -167,8 +179,18 @@ showSlide(slide);
 </script>
 <script src="https://code.jquery.com/qunit/qunit-1.23.1.js"></script>
 <script>
-QUnit.test( "Enough slides", function( assert ) {
-    assert.ok( 5 == document.getElementsByClassName("slide").length, "Number of slides > 5" );
+QUnit.test( "All quotes have origin", function( assert ) {
+    var quotes = document.getElementsByTagName("blockquote");
+    for(var i = 0; i < quotes.length; i++) {
+        assert.equal(1, quotes[i].getElementsByTagName("footer").length);
+    }
 });
+QUnit.test( "All images loaded", function( assert ) {
+    var images = document.getElementsByTagName("img");
+    for(var i = 0; i < images.length; i++) {
+        assert.ok(images[i].naturalWidth > 0);
+    }
+});
+
 </script>
 </html>
