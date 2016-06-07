@@ -62,19 +62,20 @@ blockquote footer {
       <img class="slide" src="the_software_craftsman.jpeg"/>
       <p>This book mentions TDD in every chapter so I got curious.</p>
       <img class="slide" src="tdd_by_example.jpeg"/>
+      <p>Kent Beck is the father of TDD.</p>
       <img class="slide" src="working_effectively.jpeg"/>
+      <p>This book aims to describe how to break out of the TDD programmers legacy code catch 22: You can't modify the code without having tests first and you can't test the code without modifying it.</p>
     </div>
     <div class="slide">
-    </div>
-    <div class="slide">
-      <div id="qunit"></div>
-      <div id="qunit-fixture"></div>
     </div>
     <div class="slide">
       <h2>Red, Green, Refactor</h2>
       <img src="tomato.jpeg" style="width:100%; max-width:661px; max-height:496px;"/>
+      <p>First we write a test that will teach us something about the code. And we make sure it fails.</p>
       <img src="cucumber.jpeg" style="width:100%; max-width:661px; max-height:496px;"/>
+      <p>Then we make the simplest possible implementation to make the test pass.</p>
       <img src="cucumber_sliced.jpeg" style="width:100%; max-width:661px; max-height:496px;"/>
+      <p>Now we have the safety net in place, we can iterate on refactoring the code with focus on removing duplication.</p>
       <h2>TDD is not about testing</h2>
       <blockquote>
         <ul>
@@ -92,10 +93,18 @@ blockquote footer {
         <p>Test-first fundamentalism is like abstinence-only sex ed: An unrealistic, ineffective morality campaign for self-loathing and shaming.</p>
         <footer>TDD is dead. Long live testing by David Heinemeier Hansson</footer>
       </blockquote>
+      <blockquote>
+        <p>Code without tests is bad code. It doesn’t matter how well written it is; it doesn’t matter how pretty or object-oriented or well-encapsulated it is. With tests, we can change the behavior of our code quickly and verifiably. Without them, we really don’t know if our code is getting better or worse.</p>
+        <footer>Working Effectively with Legacy Code</footer>
+      </blockquote>
+    </div>
+    <p>TDD pushes you towards the dependency inversion principle, be aware of this and don't go crazy.</p>
+    <div class="slide">
+      <div id="qunit"></div>
+      <div id="qunit-fixture"></div>
     </div>
   </div><!-- slides -->
-</body>
-<script>
+</body><script>
 var preTags = document.getElementsByTagName("pre");
 
 function count_indent(string) {
