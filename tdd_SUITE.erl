@@ -2,6 +2,24 @@
 
 -include_lib("eunit/include/eunit.hrl").
 
+%%
+%% Write a function that given input N >= 0 calculates the correct value from the Fibonacci sequence.
+%% The Fibonacci sequence begins with the following numbers: 
+%%
+%% 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765, 10946, 17711, 28657, 46368, 75025, 121393, 196418, 317811, 514229, 832040, 1346269, 2178309 ...
+%%
+%% Example:
+%%
+%% Given N = 0, its Fibonacci value is 0.
+%% Given N = 1, its Fibonacci value is 1.
+%% Given N = 2, its Fibonacci value is 1.
+%% Given N = 3, its Fibonacci value is 2.
+%% .
+%% .
+%% .
+%% Given N = 8, its Fibonacci value is 21.
+%%
+
 
 fib(0) ->
     0;
