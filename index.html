@@ -37,11 +37,11 @@ h1 {
 
 }
 #slides {
-    text-align: center;
     margin: auto;
-    max-width: 900px;
+    max-width: 640px;
 }
 #slides img {
+    text-align: center;
     margin: auto;
 }
 #slides table {
@@ -118,6 +118,83 @@ blockquote em{
 </head>
 <body>
   <div id="slides">
+    <div class="slide">
+      <h1>Test driven design</h1>
+      <h2>Hands-on experience and conclusions</h2>
+    </div>
+    <div class="slide">
+      <h2>The “project”</h2>
+      <ul>
+        <li>Develop a new application framework for SGW.</li>
+        <li>Daily code deliveries and nightly builds.</li>
+        <li>Automated tests, full set of unit tests for delivered code.</li>
+        <li>Heavy focus on design quality with design workshops, white board centric.</li>
+        <li>Teams reviewed each others design ideas as well as code.</li>
+        <li>Competitive setup...</li>
+      </ul>
+    </div>
+    <div class="slide">
+      <h2>Crash and burn</h2>
+      <ul>
+        <li>First design iteration – failed miserably</li>
+        <li>Code was written first and unit tests last.</li>
+        <li>Too big units with multiple purposes and many dependencies. The units were not that easy to test!</li>
+        <li>Writing unit tests turned out to be a challenge and we found ourselves creating an over-complicated test-harness with complicated mock generation.</li>
+        <li>Not so good code coverage.</li>
+        <li>Our self esteem took a plunge</li>
+      </ul>
+    </div>
+    <div class="slide">
+      <h2>The insight</h2>
+      <ul>
+        <li>Design to make it testable!</li>
+        <ul>
+          <li>Dependency injection, decoupling.</li>
+          <li>Separation of concern.</li>
+          <li>Keep it clean! One unit, one purpose.</li>
+          <li>Validate the existence and question the role and purpose of the unit.</li>
+          <li>Requirement injection. Test the sturdiness of the design.</li>
+        </ul>
+        <li>A simple test-harness, easy to maintain and easy to use!</li>
+        <li>Up-front design doesn’t work.</li>
+        <ul>
+          <li>By definition, if you are designing first, then you are not yet using what you have designed and you will not see the flaws until too late.</li>
+          <li>You have to design incrementally as the system evolves.</li>
+          <li>Unit tests are first users of your design/code.</li>
+        </ul>
+        <li>Only code what you need!!!!</li>
+      </ul>
+    </div>
+    <div class="slide">
+      <h2>Learning the lesson</h2>
+      <ul>
+        <li>The teams started to view the design from a test and usability perspective already from start.</li>
+        <ul>
+          <li>The test property became an important part of the design process. Test and usability was always evaluated.</li>
+          <li>Testers (design test, FT) became involved in the design process and took part in the design workshops.</li>
+          <li>Code and unit tests evolved in parallel. We discovered design problems earlier...</li>
+        </ul>
+        <li>It was fun!</li>
+      </ul>
+    </div>
+    <div class="slide">
+      <h2>The Bonus</h2>
+      <ul>
+        <li>The test approach improved both design and code as a side effect.</li>
+        <ul>
+          <li>Modularized and decoupled design</li>
+          <li>Clear interfaces</li>
+          <li>Re-usable parts</li>
+          <li>Separation of concern</li>
+          <li>Only needed code, nothing more, nothing less</li>
+          <li>Easy trouble shooting</li>
+          <li>...</li>
+        </ul>
+        <li>The gap between test and design vanished.</li>
+      </ul>
+    </div>
+    <div class="slide">
+    </div>
     <div class="slide">
       <h1>Test Driven Programming</h1>
       <blockquote>
@@ -212,10 +289,233 @@ blockquote em{
       <h3>Fibonacci!!</h3>
       <img src="fibonacci.jpg" style="width:100%; max-width:661px; max-height:496px;"/>
     </div>
+<div id="code_sample">
+<div>
+<pre>
+test_fib_zero() ->
+    ?assertEqual(0, fib(0)).
+</pre>
+</div>
+<div>
+<pre>
+fib(0) ->
+    0.
+
+test_fib_zero() ->
+    ?assertEqual(0, fib(0)).
+</pre>
+</div>
+<div>
+<pre>
+fib(0) ->
+    0.
+
+test_fib_zero() ->
+    ?assertEqual(0, fib(0)).
+
+test_fib_one() ->
+    ?assertEqual(1, fib(1)).
+
+</pre>
+</div>
+<div>
+<pre>
+fib(0) ->
+    0;
+fib(1) ->
+    1.
+
+test_fib_zero() ->
+    ?assertEqual(0, fib(0)).
+
+test_fib_one() ->
+    ?assertEqual(1, fib(1)).
+</pre>
+</div>
+<div>
+<pre>
+fib(0) ->
+    0;
+fib(1) ->
+    1.
+
+test_fib_zero() ->
+    ?assertEqual(0, fib(0)).
+
+test_fib_one() ->
+    ?assertEqual(1, fib(1)).
+
+test_fib_two() ->
+    ?assertEqual(1, fib(2)).
+</pre>
+</div>
+<div>
+<pre>
+fib(0) ->
+    0;
+fib(1) ->
+    1;
+fib(2) ->
+    1.
+
+test_fib_zero() ->
+    ?assertEqual(0, fib(0)).
+
+test_fib_one() ->
+    ?assertEqual(1, fib(1)).
+
+test_fib_two() ->
+    ?assertEqual(1, fib(2)).
+</pre>
+</div>
+<div>
+<pre>
+fib(0) ->
+    0;
+fib(1) ->
+    1;
+fib(2) ->
+    1.
+
+test_fib_zero() ->
+    ?assertEqual(0, fib(0)).
+
+test_fib_one() ->
+    ?assertEqual(1, fib(1)).
+
+test_fib_two() ->
+    ?assertEqual(1, fib(2)).
+
+test_fib_three() ->
+    ?assertEqual(2, fib(3)).
+</pre>
+</div>
+<div>
+<pre>
+fib(0) ->
+    0;
+fib(1) ->
+    1;
+fib(2) ->
+    1;
+fib(3) ->
+    2.
+
+test_fib_zero() ->
+    ?assertEqual(0, fib(0)).
+
+test_fib_one() ->
+    ?assertEqual(1, fib(1)).
+
+test_fib_two() ->
+    ?assertEqual(1, fib(2)).
+
+test_fib_three() ->
+    ?assertEqual(2, fib(3)).
+</pre>
+</div>
+<div>
+<pre>
+fib(0) ->
+    0;
+fib(1) ->
+    1;
+fib(2) ->
+    1;
+fib(3) ->
+    1 + 1.
+
+test_fib_zero() ->
+    ?assertEqual(0, fib(0)).
+
+test_fib_one() ->
+    ?assertEqual(1, fib(1)).
+
+test_fib_two() ->
+    ?assertEqual(1, fib(2)).
+
+test_fib_three() ->
+    ?assertEqual(2, fib(3)).
+</pre>
+</div>
+<div>
+<pre>
+fib(0) ->
+    0;
+fib(1) ->
+    1;
+fib(2) ->
+    1;
+fib(N) ->
+    fib(N-1) + 1.
+
+test_fib_zero() ->
+    ?assertEqual(0, fib(0)).
+
+test_fib_one() ->
+    ?assertEqual(1, fib(1)).
+
+test_fib_two() ->
+    ?assertEqual(1, fib(2)).
+
+test_fib_three() ->
+    ?assertEqual(2, fib(3)).
+</pre>
+</div>
+<div>
+<pre>
+fib(0) ->
+    0;
+fib(1) ->
+    1;
+fib(2) ->
+    1;
+fib(N) ->
+    fib(N-1) + fib(N-2).
+
+test_fib_zero() ->
+    ?assertEqual(0, fib(0)).
+
+test_fib_one() ->
+    ?assertEqual(1, fib(1)).
+
+test_fib_two() ->
+    ?assertEqual(1, fib(2)).
+
+test_fib_three() ->
+    ?assertEqual(2, fib(3)).
+</pre>
+</div>
+<div>
+<pre>
+fib(0) ->
+    0;
+fib(1) ->
+    1;
+fib(N) ->
+    fib(N-1) + fib(N-2).
+
+test_fib_zero() ->
+    ?assertEqual(0, fib(0)).
+
+test_fib_one() ->
+    ?assertEqual(1, fib(1)).
+
+test_fib_two() ->
+    ?assertEqual(1, fib(2)).
+
+test_fib_three() ->
+    ?assertEqual(2, fib(3)).
+</pre>
+</div>
+</div>
+
+
+
   </div><!-- slides -->
 </body>
 <script>
-var preTags = document.getElementsByTagName("pre");
+var preTags = document.getElementById("code_sample").getElementsByTagName("pre");
 
 function count_indent(string) {
     for(var i = 0; i < string.length; i++) {
@@ -234,7 +534,6 @@ function blockify(preTag) {
         var div = document.createElement("code");
         if(indent > 0) {
             div.style['padding-left'] = (indent) + "ch";
-            console.log(indent)
             div.style['text-indent'] = (- indent)   + "ch";
         }
         var trimmed = line.trim();
@@ -248,8 +547,9 @@ function blockify(preTag) {
     parent.removeChild(preTag);
     hljs.highlightBlock(parent);
 }
-
-blockify(preTags[0]);
+for(var i = 0; i < preTags.length; i++) {
+    blockify(preTags[i]);
+}
 </script>
 <script>
 var slide = 0;
@@ -294,7 +594,7 @@ document.onkeydown = function(e) {
     showSlide(slide)
 }
 
-showSlide(slide);
+//showSlide(slide);
 </script>
 <script src="https://code.jquery.com/qunit/qunit-1.23.1.js"></script>
 <script>
