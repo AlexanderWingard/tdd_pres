@@ -24,13 +24,17 @@ code {
 }
 
 body {
-font-family: 'Source Sans Pro';
-font-weight: 100 !important;
+    margin-top: 5em;
+    font-family: 'Source Sans Pro';
+    font-weight: 100 !important;
     color: #333;
 }
 h1 {
-font-size: 5vw;
+    font-size: 5vw;
     text-align: center;
+}
+.slide {
+
 }
 #slides {
     text-align: center;
@@ -45,68 +49,172 @@ font-size: 5vw;
     border:#ccc 1px solid;
     margin: auto;
 }
-blockquote {
-font-style: italic;
+
+blockquote{
+    display:block;
+    background: #fff;
+    padding: 15px 20px 15px 45px;
+    margin: 0 0 20px;
+    position: relative;
+
+    /*Font*/
+    font-family: Georgia, serif;
+    font-size: 16px;
+    line-height: 1.2;
+    color: #666;
     text-align: left;
+
+    /*Borders - (Optional)*/
+    border-left: 15px solid #c76c0c;
+    border-right: 2px solid #c76c0c;
+
+    /*Box Shadow - (Optional)*/
+    -moz-box-shadow: 2px 2px 15px #ccc;
+    -webkit-box-shadow: 2px 2px 15px #ccc;
+    box-shadow: 2px 2px 15px #ccc;
 }
+
 blockquote footer {
     text-align: right;
+    font-style: italic;
+}
+
+blockquote::before{
+    content: "\201C"; /*Unicode for Left Double Quote*/
+
+    /*Font*/
+    font-family: Georgia, serif;
+    font-size: 60px;
+    font-weight: bold;
+    color: #999;
+
+    /*Positioning*/
+    position: absolute;
+    left: 10px;
+    top:5px;
+}
+
+blockquote::after{
+    /*Reset to make sure*/
+    content: "";
+}
+
+blockquote a{
+    text-decoration: none;
+    background: #eee;
+    cursor: pointer;
+    padding: 0 3px;
+    color: #c76c0c;
+}
+
+blockquote a:hover{
+    color: #666;
+}
+
+blockquote em{
+    font-style: italic;
 }
 </style>
 </head>
 <body>
-  <h1>Test Driven Programming</h1>
   <div id="slides">
     <div class="slide">
-      <p>Books:</p>
-      <img class="slide" src="the_software_craftsman.jpeg"/>
-      <p>This book mentions TDD in every chapter so I got curious.</p>
-      <img class="slide" src="tdd_by_example.jpeg"/>
-      <p>Kent Beck is the father of TDD.</p>
-      <img class="slide" src="working_effectively.jpeg"/>
-      <p>This book aims to describe how to break out of the TDD programmers legacy code catch 22: You can't modify the code without having tests first and you can't test the code without modifying it.</p>
-    </div>
-    <div class="slide">
-    </div>
-    <div class="slide">
-      <h2>Red, Green, Refactor</h2>
-      <img src="tomato.jpeg" style="width:100%; max-width:661px; max-height:496px;"/>
-      <p>First we write a test that will teach us something about the code. And we make sure it fails.</p>
-      <img src="cucumber.jpeg" style="width:100%; max-width:661px; max-height:496px;"/>
-      <p>Then we make the simplest possible implementation to make the test pass.</p>
-      <img src="cucumber_sliced.jpeg" style="width:100%; max-width:661px; max-height:496px;"/>
-      <p>Now we have the safety net in place, we can iterate on refactoring the code with focus on removing duplication.</p>
-      <h2>TDD is not about testing</h2>
-      <blockquote>
-        <ul>
-          <li>Write a failing automated test before you write any code.</li>
-          <li>Remove duplication.</li>
-          <footer>Test Driven Development by Example</footer>
-        </ul>
-      </blockquote>
-      <h2></h2>
-      <blockquote>
-        <p>So, in TDD we do not write tests. We write specifications. Executable specifications.</p>
-        <footer>sustainabletdd.com</footer>
-      </blockquote>
-      <blockquote>
-        <p>Test-first fundamentalism is like abstinence-only sex ed: An unrealistic, ineffective morality campaign for self-loathing and shaming.</p>
-        <footer>TDD is dead. Long live testing by David Heinemeier Hansson</footer>
-      </blockquote>
+      <h1>Test Driven Programming</h1>
       <blockquote>
         <p>Code without tests is bad code. It doesn’t matter how well written it is; it doesn’t matter how pretty or object-oriented or well-encapsulated it is. With tests, we can change the behavior of our code quickly and verifiably. Without them, we really don’t know if our code is getting better or worse.</p>
         <footer>Working Effectively with Legacy Code</footer>
       </blockquote>
     </div>
-    <p>TDD pushes you towards the dependency inversion principle, be aware of this and don't go crazy.</p>
-    <p>It feels very slow in the start</p>
-    <p>You really get to program more than you're used to</p>
+    <div class="slide">
+      <h2>Why am I here?</h2>
+      <p>I read some books...</p>
+      <img src="the_software_craftsman.jpeg"/>
+      <p>This book mentions TDD in every chapter so I got curious.</p>
+    </div>
+    <div class="slide">
+      <img src="tdd_by_example.jpeg"/>
+      <p>Kent Beck is the father of TDD.</p>
+      <blockquote>
+        I'm not a great programmer; I'm just a good programmer with great habits.
+        <footer>Kent Beck</footer>
+      </blockquote>
+    </div>
+    <div class="slide">
+      <img src="working_effectively.jpeg"/>
+      <p>This book aims to describe how to break out of the TDD programmers legacy code catch 22: You can't modify the code without having tests first and you can't test the code without modifying it.</p>
+    </div>
+    <div class="slide">
+      <h2>So what is TDD?</h2>
+      <blockquote>
+        <ul>
+          <li>Write a failing automated test before you write any code.</li>
+          <li>Remove duplication.</li>
+          <footer>Test Driven Development by Example -  Kent Beck</footer>
+        </ul>
+      </blockquote>
+      <blockquote>
+        <ul>
+          <li>You are not allowed to write any production code unless it is to make a failing unit test pass.</li>
+          <li>You are not allowed to write any more of a unit test than is sufficient to fail; and compilation failures are failures.</li>
+          <li>You are not allowed to write any more production code than is sufficient to pass the one failing unit test.</li>
+          <footer>The Three Rules Of Tdd - Robert C. Martin</footer>
+        </ul>
+      </blockquote>
+    </div>
+    <div class="slide">
+      <h2>Red</h2>
+      <img src="tomato.jpeg" style="width:100%; max-width:661px; max-height:496px;"/>
+      <p>First we write a test that will teach us something about the code. And we make sure it fails.</p>
+    </div>
+    <div class="slide">
+      <h2>Green</h2>
+      <img src="cucumber.jpeg" style="width:100%; max-width:661px; max-height:496px;"/>
+      <p>Then we make the simplest possible implementation to make the test pass.</p>
+    </div>
+    <div class="slide">
+      <h2>Refactor</h2>
+      <img src="cucumber_sliced.jpeg" style="width:100%; max-width:661px; max-height:496px;"/>
+      <p>Now we have the safety net in place, we can iterate on refactoring the code with focus on removing duplication.</p>
+    </div>
+    <div class="slide">
+      <h2>What is TDD not?</h2>
+      <h3>TDD is not a test method, it's a development method.</h3>
+      <blockquote>
+        <p>So, in TDD we do not write tests. We write specifications. Executable specifications.</p>
+        <footer>sustainabletdd.com</footer>
+      </blockquote>
+    </div>
+    <div class="slide">
+      <h2>Don't drink too much kool-aid</h2>
+      <img src="koolaid.jpg" style="width:100%; max-width:283px; max-height:424px;"/>
+      <blockquote>
+        <ul>
+          <li>Test first is like a fundamentalist religion</li>
+          <li>Test first leads to 'design damage'</li>
+          <li>Too much focus on unit tests other kinds are more useful</li>
+        </ul>
+        <footer>Emily Bache summarizing the points made by David Heinemeier Hansson in TDD is dead. Long live testing</footer>
+      </blockquote>
+      <p>TDD pushes you towards the dependency inversion principle, be aware of this and don't go crazy.</p>
+    </div>
+    <div class="slide">
+      <h2>Where do I start?</h2>
+      <p>Try a Kata</p>
+      <p>It feels very slow in the start</p>
+      <p>You really get to program more than you're used to</p>
+    </div>
     <div class="slide">
       <div id="qunit"></div>
       <div id="qunit-fixture"></div>
     </div>
+    <div class="slide">
+      <h2>Demo time</h2>
+      <h3>Fibonacci!!</h3>
+      <img src="fibonacci.jpg" style="width:100%; max-width:661px; max-height:496px;"/>
+    </div>
   </div><!-- slides -->
-</body><script>
+</body>
+<script>
 var preTags = document.getElementsByTagName("pre");
 
 function count_indent(string) {
