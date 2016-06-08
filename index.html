@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/styles/default.min.css">
 <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-1.23.1.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.4.0/languages/erlang.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet" type="text/css">
 <link href='https://fonts.googleapis.com/css?family=Lato:400,100' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
@@ -40,7 +41,8 @@ h1 {
     margin: auto;
     max-width: 640px;
 }
-#slides img {
+.slide img {
+    display:block;
     text-align: center;
     margin: auto;
 }
@@ -281,6 +283,7 @@ blockquote em{
       <p>You really get to program more than you're used to</p>
     </div>
     <div class="slide">
+      <h2>Self testing presentation</h2>
       <div id="qunit"></div>
       <div id="qunit-fixture"></div>
     </div>
@@ -290,132 +293,172 @@ blockquote em{
       <img src="fibonacci.jpg" style="width:100%; max-width:661px; max-height:496px;"/>
     </div>
 <div id="code_sample">
-<div>
+<div class="slide">
+<p>We write the simplest possible test case. This does not even compile since fib/0 is not defined.</p>
 <pre>
-test_fib_zero() ->
+-module(fib).
+-include_lib("eunit/include/eunit.hrl").
+
+fib_zero_test() ->
     ?assertEqual(0, fib(0)).
 </pre>
 </div>
-<div>
+
+<div class="slide">
+<p>Then we do the simplest possible implementation to get it to compile and the test to pass.</p>
 <pre>
+-module(fib).
+-include_lib("eunit/include/eunit.hrl").
+
 fib(0) ->
     0.
 
-test_fib_zero() ->
+fib_zero_test() ->
     ?assertEqual(0, fib(0)).
 </pre>
 </div>
-<div>
+
+<div class="slide">
+<p>Let's continue to add another test that fails.</p>
 <pre>
+-module(fib).
+-include_lib("eunit/include/eunit.hrl").
+
 fib(0) ->
     0.
 
-test_fib_zero() ->
+fib_zero_test() ->
     ?assertEqual(0, fib(0)).
 
-test_fib_one() ->
+fib_one_test() ->
     ?assertEqual(1, fib(1)).
 
 </pre>
 </div>
-<div>
+
+<div class="slide">
+<p>Again, simplest possible solution to get to green.</p>
 <pre>
+-module(fib).
+-include_lib("eunit/include/eunit.hrl").
+
 fib(0) ->
     0;
 fib(1) ->
     1.
 
-test_fib_zero() ->
+fib_zero_test() ->
     ?assertEqual(0, fib(0)).
 
-test_fib_one() ->
+fib_one_test() ->
     ?assertEqual(1, fib(1)).
 </pre>
 </div>
-<div>
+
+<div class="slide">
+<p>We are not yet seeing any significant duplication so let's continue. To add yet another test.</p>
 <pre>
+-module(fib).
+-include_lib("eunit/include/eunit.hrl").
+
 fib(0) ->
     0;
 fib(1) ->
     1.
 
-test_fib_zero() ->
+fib_zero_test() ->
     ?assertEqual(0, fib(0)).
 
-test_fib_one() ->
+fib_one_test() ->
     ?assertEqual(1, fib(1)).
 
-test_fib_two() ->
+fib_two_test() ->
     ?assertEqual(1, fib(2)).
 </pre>
 </div>
-<div>
+
+<div class="slide">
+<p>Quick way of getting to green.</p>
 <pre>
+-module(fib).
+-include_lib("eunit/include/eunit.hrl").
+
 fib(0) ->
     0;
-fib(1) ->
+fib(N) ->
     1;
-fib(2) ->
-    1.
 
-test_fib_zero() ->
+fib_zero_test() ->
     ?assertEqual(0, fib(0)).
 
-test_fib_one() ->
+fib_one_test() ->
     ?assertEqual(1, fib(1)).
 
-test_fib_two() ->
+fib_two_test() ->
     ?assertEqual(1, fib(2)).
 </pre>
 </div>
-<div>
+
+<div class="slide">
+<p>More tests!</p>
 <pre>
+-module(fib).
+-include_lib("eunit/include/eunit.hrl").
+
 fib(0) ->
     0;
-fib(1) ->
-    1;
-fib(2) ->
+fib(N) ->
     1.
 
-test_fib_zero() ->
+fib_zero_test() ->
     ?assertEqual(0, fib(0)).
 
-test_fib_one() ->
+fib_one_test() ->
     ?assertEqual(1, fib(1)).
 
-test_fib_two() ->
+fib_two_test() ->
     ?assertEqual(1, fib(2)).
 
-test_fib_three() ->
+fib_three_test() ->
     ?assertEqual(2, fib(3)).
 </pre>
 </div>
-<div>
+
+<div class="slide">
+<p>To get to green I have to add back the special cases.</p>
 <pre>
+-module(fib).
+-include_lib("eunit/include/eunit.hrl").
+
 fib(0) ->
     0;
 fib(1) ->
     1;
 fib(2) ->
     1;
-fib(3) ->
+fib(N) ->
     2.
 
-test_fib_zero() ->
+fib_zero_test() ->
     ?assertEqual(0, fib(0)).
 
-test_fib_one() ->
+fib_one_test() ->
     ?assertEqual(1, fib(1)).
 
-test_fib_two() ->
+fib_two_test() ->
     ?assertEqual(1, fib(2)).
 
-test_fib_three() ->
+fib_three_test() ->
     ?assertEqual(2, fib(3)).
 </pre>
 </div>
-<div>
+
+<div class="slide">
+<p>Now we can with our knowledge of the algorithm detect that there is duplication going on. That 2 is really 1 + 1.</p>
 <pre>
+-module(fib).
+-include_lib("eunit/include/eunit.hrl").
+
 fib(0) ->
     0;
 fib(1) ->
@@ -425,21 +468,26 @@ fib(2) ->
 fib(3) ->
     1 + 1.
 
-test_fib_zero() ->
+fib_zero_test() ->
     ?assertEqual(0, fib(0)).
 
-test_fib_one() ->
+fib_one_test() ->
     ?assertEqual(1, fib(1)).
 
-test_fib_two() ->
+fib_two_test() ->
     ?assertEqual(1, fib(2)).
 
-test_fib_three() ->
+fib_three_test() ->
     ?assertEqual(2, fib(3)).
 </pre>
 </div>
-<div>
+
+<div class="slide">
+<p>The first 1 is actually a duplication of the previous statement.</p>
 <pre>
+-module(fib).
+-include_lib("eunit/include/eunit.hrl").
+
 fib(0) ->
     0;
 fib(1) ->
@@ -449,21 +497,28 @@ fib(2) ->
 fib(N) ->
     fib(N-1) + 1.
 
-test_fib_zero() ->
+fib_zero_test() ->
     ?assertEqual(0, fib(0)).
 
-test_fib_one() ->
+fib_one_test() ->
     ?assertEqual(1, fib(1)).
 
-test_fib_two() ->
+fib_two_test() ->
     ?assertEqual(1, fib(2)).
 
-test_fib_three() ->
+fib_three_test() ->
     ?assertEqual(2, fib(3)).
 </pre>
 </div>
-<div>
+
+<div class="slide">
+<p>And the second 1 is a duplcate of N-2</p>
 <pre>
+-module(fib).
+-include_lib("eunit/include/eunit.hrl").
+
+-module(fib).
+
 fib(0) ->
     0;
 fib(1) ->
@@ -473,21 +528,26 @@ fib(2) ->
 fib(N) ->
     fib(N-1) + fib(N-2).
 
-test_fib_zero() ->
+fib_zero_test() ->
     ?assertEqual(0, fib(0)).
 
-test_fib_one() ->
+fib_one_test() ->
     ?assertEqual(1, fib(1)).
 
-test_fib_two() ->
+fib_two_test() ->
     ?assertEqual(1, fib(2)).
 
-test_fib_three() ->
+fib_three_test() ->
     ?assertEqual(2, fib(3)).
 </pre>
 </div>
-<div>
+
+<div class="slide">
+<p>Now we can remove the obsolete clause for 2</p>
 <pre>
+-module(fib).
+-include_lib("eunit/include/eunit.hrl").
+
 fib(0) ->
     0;
 fib(1) ->
@@ -495,27 +555,51 @@ fib(1) ->
 fib(N) ->
     fib(N-1) + fib(N-2).
 
-test_fib_zero() ->
+fib_zero_test() ->
     ?assertEqual(0, fib(0)).
 
-test_fib_one() ->
+fib_one_test() ->
     ?assertEqual(1, fib(1)).
 
-test_fib_two() ->
+fib_two_test() ->
     ?assertEqual(1, fib(2)).
 
-test_fib_three() ->
+fib_three_test() ->
     ?assertEqual(2, fib(3)).
 </pre>
 </div>
+
+<div class="slide">
+<p>Now we can try to make a complete test for some fib numbers that will be a regression test</p>
+<pre>
+-module(fib).
+-include_lib("eunit/include/eunit.hrl").
+
+fib(0) ->
+    0;
+fib(1) ->
+    1;
+fib(N) ->
+    fib(N-1) + fib(N-2).
+
+fib_long_list_test() ->
+    Output = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765, 10946, 17711, 28657, 46368, 75025, 121393, 196418, 317811, 514229, 832040, 1346269, 2178309],
+    Input = lists:seq(0, length(Output)-1),
+    ?assertEqual(length(Output), length(Input)),
+    Res = lists:map(fun(In) -> fib(In) end, Input),
+    ?assertEqual(Output, Res).
+</pre>
+
+<p>There you have it, an implementation of fib with driven by tests.<p/>
+</p>Please do remember that this example is ment to examplify the flow of TDD and not a reasonable way of implementing fibonacci</p>
 </div>
+</div><!-- code_sa<mple -->
 
 
 
   </div><!-- slides -->
 </body>
 <script>
-var preTags = document.getElementById("code_sample").getElementsByTagName("pre");
 
 function count_indent(string) {
     for(var i = 0; i < string.length; i++) {
@@ -529,12 +613,15 @@ function count_indent(string) {
 function blockify(preTag) {
     var parent = preTag.parentNode;
     var lines = preTag.innerHTML.split('\n');
+    var newDiv = document.createElement("code");
+    newDiv.className = "erlang";
     lines.forEach(function(line) {
         var indent = count_indent(line);
         var div = document.createElement("code");
+
         if(indent > 0) {
             div.style['padding-left'] = (indent) + "ch";
-            div.style['text-indent'] = (- indent)   + "ch";
+            div.style['text-indent'] = (- indent) + "ch";
         }
         var trimmed = line.trim();
         if(trimmed == "") {
@@ -542,14 +629,20 @@ function blockify(preTag) {
         }
         var indentation = '<span>' + '&nbsp'.repeat(indent) + '</span>';
         div.innerHTML = indentation + trimmed;
-        parent.appendChild(div);
+        newDiv.appendChild(div);
     });
-    parent.removeChild(preTag);
-    hljs.highlightBlock(parent);
+
+    preTag.parentNode.replaceChild(newDiv, preTag);
+    hljs.highlightBlock(newDiv);
 }
-for(var i = 0; i < preTags.length; i++) {
-    blockify(preTags[i]);
-}
+
+var preTags = [];
+do {
+    console.log("apa");
+    preTags = document.getElementById("code_sample").getElementsByTagName("pre");
+    blockify(preTags[0]);
+} while(preTags.length > 0);
+
 </script>
 <script>
 var slide = 0;
